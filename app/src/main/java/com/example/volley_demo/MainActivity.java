@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-// ...
+
 
 // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
@@ -55,17 +55,27 @@ public class MainActivity extends AppCompatActivity {
                                String name=mainObj.getString("name");
                                String username=mainObj.getString("username");
                                String email=mainObj.getString("email");
+
                                JSONObject address=mainObj.getJSONObject("address");
+
                                String city=address.getString("city");
-                               DataModel dataModel=new DataModel(id,name,username,email,city);
+                               String zipcode=address.getString("zipcode");
+
+                               JSONObject geo=address.getJSONObject("geo");
+
+                               String lat=geo.getString("lat");
+                               String lng=geo.getString("lng");
+
+
+                               DataModel dataModel=new DataModel(id,name,username,email,city,zipcode,lat,lng);
                                list.add(dataModel);
                             }
                         } catch (JSONException e)
                         {
                             throw new RuntimeException(e);
                         }
+                        Log.d("AAA", "onResponse: Object="+list.get(1));
 
-                        Log.d("TTT", "onResponse: Object="+list.get(0));
                     }
                 }, new Response.ErrorListener() {
             @Override
